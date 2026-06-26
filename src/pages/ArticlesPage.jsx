@@ -337,7 +337,7 @@ export default function ArticlesPage() {
                   <TableCell>Title</TableCell>
                   <TableCell>Disease</TableCell>
                   <TableCell>Risk</TableCell>
-                  <TableCell>Country</TableCell>
+                  <TableCell>State</TableCell>
                   <TableCell>Published</TableCell>
                   <TableCell align="right" />
                 </TableRow>

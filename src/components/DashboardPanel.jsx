@@ -403,7 +403,7 @@ export default function DashboardPanel() {
         <Grid container spacing={3} mb={3}>
           <Grid item xs={12}>
             <Paper sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Articles by Country (Top 20)</Typography>
+              <Typography variant="h6" fontWeight={700} gutterBottom>Articles by State (Top 20)</Typography>
               <Divider sx={{ mb: 2 }} />
               <ResponsiveContainer width="100%" height={Math.max(280, stats.articles_by_country.length * 26)}>
                 <BarChart data={stats.articles_by_country} layout="vertical" barSize={14} margin={{ left: 16, right: 16 }}>
@@ -435,7 +435,7 @@ export default function DashboardPanel() {
                   <TableCell>Title</TableCell>
                   <TableCell>Disease</TableCell>
                   <TableCell>Risk</TableCell>
-                  <TableCell>Country</TableCell>
+                  <TableCell>State</TableCell>
                   <TableCell>Published</TableCell>
                   <TableCell />
                 </TableRow>
