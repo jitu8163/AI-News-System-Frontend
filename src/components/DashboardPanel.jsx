@@ -72,6 +72,7 @@ const CustomTooltip = ({ active, payload }) => {
 export default function DashboardPanel() {
   const [stats, setStats] = useState(null);
   const [countryCounts, setCountryCounts] = useState([]);
+  const [regions, setRegions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
@@ -92,6 +93,7 @@ export default function DashboardPanel() {
       .catch(() => setError("Failed to load dashboard stats"))
       .finally(() => setLoading(false));
     dashboardApi.countryCounts().then(({ data }) => setCountryCounts(data)).catch(() => {});
+    dashboardApi.regions().then(({ data }) => setRegions(data)).catch(() => {});
     keywordsApi.list().then(({ data }) => setKeywords(data)).catch(() => {});
   }, []);
 
@@ -134,7 +136,9 @@ export default function DashboardPanel() {
   const diseaseRows = impact?.by_disease ?? [];
   const impactTimeline = impact?.timeline ?? [];
   const selectedMetricCfg = IMPACT_METRICS.find((m) => m.key === impactMetric) ?? IMPACT_METRICS[0];
-  const countryOptions = countryCounts.map((c) => c.country);
+  // Full list of Indian states for the filter, with article counts where present.
+  const stateCounts = Object.fromEntries(countryCounts.map((c) => [c.country, c.count]));
+  const stateOptions = Array.from(new Set([...regions, ...countryCounts.map((c) => c.country)]));
   const impactFilterActive = Boolean(impactFilters.keyword_id || impactFilters.country);
 
   return (
@@ -144,7 +148,7 @@ export default function DashboardPanel() {
         <Box>
           <Typography variant="h4" fontWeight={800} color="text.primary">Dashboard</Typography>
           <Typography color="text.secondary" sx={{ fontSize: "0.875rem", mt: 0.5 }}>
-            Global disease &amp; outbreak monitoring overview
+            India disease &amp; outbreak monitoring overview
           </Typography>
         </Box>
         {isAdmin && (
@@ -168,7 +172,7 @@ export default function DashboardPanel() {
       <Paper sx={{ p: 3, borderRadius: 3, mb: 3 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <MapIcon sx={{ color: "#6366F1", fontSize: 20 }} />
-          <Typography variant="h6" fontWeight={700}>Articles Across the World</Typography>
+          <Typography variant="h6" fontWeight={700}>Articles Across India</Typography>
         </Box>
         <Divider sx={{ mb: 2 }} />
         <WorldMap data={countryCounts} />
@@ -200,15 +204,18 @@ export default function DashboardPanel() {
               </FormControl>
 
               <FormControl size="small" sx={{ minWidth: 160 }}>
-                <InputLabel>Country</InputLabel>
+                <InputLabel>State</InputLabel>
                 <Select
                   value={impactFilters.country}
-                  label="Country"
+                  label="State"
                   onChange={(e) => setImpactFilters((f) => ({ ...f, country: e.target.value }))}
                   sx={{ borderRadius: 2 }}
+                  MenuProps={{ PaperProps: { sx: { maxHeight: 360 } } }}
                 >
-                  <MenuItem value="">All countries</MenuItem>
-                  {countryOptions.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
+                  <MenuItem value="">All States</MenuItem>
+                  {stateOptions.map((s) => (
+                    <MenuItem key={s} value={s}>{stateCounts[s] ? `${s} (${stateCounts[s]})` : s}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
 

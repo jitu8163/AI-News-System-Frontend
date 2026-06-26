@@ -54,6 +54,7 @@ export const dashboardApi = {
   stats: () => api.get("/dashboard/stats"),
   impact: (params) => api.get("/dashboard/impact", { params }),
   countryCounts: () => api.get("/dashboard/country-counts"),
+  regions: () => api.get("/dashboard/regions"),
 };
 
 export const adminApi = {

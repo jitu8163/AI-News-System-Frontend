@@ -90,8 +90,7 @@ export default function LoginPage() {
             <AutoAwesomeIcon sx={{ color: "#fff", fontSize: 26 }} />
           </Box>
           <Box>
-            <Typography variant="h5" sx={{ color: "#fff", fontWeight: 800, letterSpacing: "0.04em", lineHeight: 1.1 }}>WOHANA</Typography>
-            <Typography sx={{ color: "#94A3B8", fontSize: "0.72rem" }}>World One Health Alerts & News Agent</Typography>
+            <Typography variant="h5" sx={{ color: "#fff", fontWeight: 800, letterSpacing: "0.04em", lineHeight: 1.1 }}>Soham360</Typography>
           </Box>
         </Box>
 
@@ -139,7 +138,7 @@ export default function LoginPage() {
             }}>
               <AutoAwesomeIcon sx={{ color: "#fff", fontSize: 20 }} />
             </Box>
-            <Typography variant="h6" fontWeight={800} sx={{ letterSpacing: "0.04em" }}>WOHANA</Typography>
+            <Typography variant="h6" fontWeight={800} sx={{ letterSpacing: "0.04em" }}>Soham360</Typography>
           </Box>
 
           <Typography variant="h5" fontWeight={700} gutterBottom>Welcome back</Typography>

@@ -5,7 +5,7 @@ import countryCoords from "../data/countryCoords";
 
 const DOT_COLOR = "#6366F1";
 const DOT_RADIUS = 3;             // small dot per article
-const SPREAD_DEG = 2.2;           // jitter radius around the country centroid (degrees)
+const SPREAD_DEG = 0.9;           // jitter radius around the state centroid (degrees)
 const MAX_DOTS_PER_COUNTRY = 200; // safety cap to keep the map responsive
 
 // Deterministic scatter so dots don't jump around on every re-render.
@@ -28,8 +28,8 @@ function scatter(country, n) {
 }
 
 /**
- * World map: one small dot per article, scattered around each country's
- * centroid. Denser countries therefore show more dots (visual article
+ * India map: one small dot per article, scattered around each state's
+ * centroid. Denser states therefore show more dots (visual article
  * frequency).
  * @param {Array<{country: string, count: number}>} data
  */
@@ -41,11 +41,10 @@ export default function WorldMap({ data = [] }) {
     <Box sx={{ position: "relative" }}>
       <Box sx={{ height: 420, borderRadius: 2, overflow: "hidden", border: "1px solid #E2E8F0" }}>
         <MapContainer
-          center={[20, 10]}
-          zoom={2}
-          minZoom={2}
-          maxZoom={6}
-          worldCopyJump
+          center={[22.5, 80]}
+          zoom={4}
+          minZoom={4}
+          maxZoom={7}
           scrollWheelZoom={false}
           style={{ height: "100%", width: "100%", background: "#EAF2FB" }}
           attributionControl={false}
@@ -81,7 +80,7 @@ export default function WorldMap({ data = [] }) {
         </Typography>
         {total === 0 && (
           <Typography sx={{ fontSize: "0.72rem", color: "#94A3B8", ml: 1 }}>
-            No country-tagged articles yet
+            No state-tagged articles yet
           </Typography>
         )}
       </Box>

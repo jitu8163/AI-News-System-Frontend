@@ -116,10 +116,7 @@ export default function AppLayout() {
             </Box>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Typography sx={{ color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.1, letterSpacing: "0.04em" }}>
-                WOHANA
-              </Typography>
-              <Typography sx={{ color: "#94A3B8", fontSize: "0.65rem" }}>
-                World One Health Alerts & News Agent
+                Soham360
               </Typography>
             </Box>
           </Box>
@@ -183,8 +180,7 @@ export default function AppLayout() {
         <Box sx={{ px: 3, py: 2.5, display: "flex", alignItems: "center", gap: 1.5 }}>
           <AutoAwesomeIcon sx={{ color: "#6366F1" }} />
           <Box>
-            <Typography sx={{ color: "#fff", fontWeight: 800, fontSize: "0.95rem", letterSpacing: "0.04em", lineHeight: 1.1 }}>WOHANA</Typography>
-            <Typography sx={{ color: "#94A3B8", fontSize: "0.6rem" }}>World One Health Alerts & News Agent</Typography>
+            <Typography sx={{ color: "#fff", fontWeight: 800, fontSize: "0.95rem", letterSpacing: "0.04em", lineHeight: 1.1 }}>Soham360</Typography>
           </Box>
         </Box>
         <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />

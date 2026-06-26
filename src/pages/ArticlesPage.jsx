@@ -202,6 +202,7 @@ export default function ArticlesPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [keywords, setKeywords] = useState([]);
   const [countryCounts, setCountryCounts] = useState([]);
+  const [regions, setRegions] = useState([]);
   const [filters, setFilters] = useState({ keyword_id: "", risk_level: "", country: "", date_from: "", date_to: "" });
   const [selectedId, setSelectedId] = useState(null);
   const [viewMode, setViewMode] = useState("grid");
@@ -211,7 +212,12 @@ export default function ArticlesPage() {
     dashboardApi.countryCounts()
       .then(({ data }) => setCountryCounts(data))
       .catch(() => {});
+    dashboardApi.regions().then(({ data }) => setRegions(data)).catch(() => {});
   }, []);
+
+  // Full list of Indian states for the filter, with article counts where present.
+  const stateCounts = Object.fromEntries(countryCounts.map((c) => [c.country, c.count]));
+  const stateOptions = Array.from(new Set([...regions, ...countryCounts.map((c) => c.country)]));
 
   const load = useCallback(() => {
     setLoading(true);
@@ -292,7 +298,7 @@ export default function ArticlesPage() {
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mb: 2.5 }}>
           {filters.risk_level && <Chip label={`Risk: ${filters.risk_level}`} size="small" onDelete={() => setFilters(f => ({ ...f, risk_level: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
           {filters.keyword_id && <Chip label={`Keyword: ${keywords.find(k => k.id === Number(filters.keyword_id))?.term ?? filters.keyword_id}`} size="small" onDelete={() => setFilters(f => ({ ...f, keyword_id: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
-          {filters.country && <Chip label={`Country: ${filters.country}`} size="small" onDelete={() => setFilters(f => ({ ...f, country: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
+          {filters.country && <Chip label={`State: ${filters.country}`} size="small" onDelete={() => setFilters(f => ({ ...f, country: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
           {filters.date_from && <Chip label={`From: ${filters.date_from}`} size="small" onDelete={() => setFilters(f => ({ ...f, date_from: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
           {filters.date_to && <Chip label={`To: ${filters.date_to}`} size="small" onDelete={() => setFilters(f => ({ ...f, date_to: "" }))} sx={{ background: "#EEF2FF", color: "#6366F1" }} />}
           <Chip label="Clear all" size="small" variant="outlined" onClick={handleClearFilters} sx={{ borderColor: "#E2E8F0" }} />
@@ -476,18 +482,18 @@ export default function ArticlesPage() {
             <Divider />
 
             <FormControl fullWidth size="small">
-              <InputLabel>Country</InputLabel>
+              <InputLabel>State</InputLabel>
               <Select
                 value={filters.country}
-                label="Country"
+                label="State"
                 onChange={handleFilterChange("country")}
                 sx={{ borderRadius: 2 }}
                 MenuProps={{ PaperProps: { sx: { maxHeight: 360 } } }}
               >
-                <MenuItem value="">All countries</MenuItem>
-                {countryCounts.map((c) => (
-                  <MenuItem key={c.country} value={c.country}>
-                    {c.country} ({c.count})
+                <MenuItem value="">All States</MenuItem>
+                {stateOptions.map((s) => (
+                  <MenuItem key={s} value={s}>
+                    {stateCounts[s] ? `${s} (${stateCounts[s]})` : s}
                   </MenuItem>
                 ))}
               </Select>
